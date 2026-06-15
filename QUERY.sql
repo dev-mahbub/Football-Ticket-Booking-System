@@ -105,3 +105,14 @@ select booking_id, user_id, match_id, coalesce(payment_status, 'Action Required'
 select booking_id, full_name, fixture, total_cost from bookings 
 inner join matches on bookings.match_id = matches.match_id
 inner join users on bookings.user_id = users.user_id
+
+ -- =========================================================================
+  -- Query 5: Display a comprehensive list of all users and their booking IDs, ensuring that fans who have never bought a ticket are still listed.
+  -- =========================================================================
+
+select users.user_id, full_name, booking_id from users left join bookings on users.user_id = bookings.user_id
+
+  -- =========================================================================
+  -- Query 6: Find all ticket bookings where the total cost is strictly higher than the average cost of all ticket bookings.
+  -- =========================================================================
+select booking_id, match_id, total_cost from bookings where total_cost > (select avg(total_cost) from bookings)
